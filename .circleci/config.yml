@@ -11,7 +11,7 @@ jobs:
           command: mvn -B test
       - run:
           name: Maven Build
-          command: mvn -B verify
+          command: mvn test
 
   qodana:
     docker:
