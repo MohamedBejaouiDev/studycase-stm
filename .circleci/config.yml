@@ -7,22 +7,25 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Run Maven Tests
+          command: mvn -B test
+      - run:
           name: Maven Build
           command: mvn -B verify
 
-  code-quality:
+  qodana:
     docker:
-      - image: jetbrains/qodana-jvm:2025.2
+      - image: jetbrains/qodana-jvm:latest
     steps:
       - checkout
       - run:
-          name: Run Qodana Scan
+          name: Run Qodana Static Analysis
           command: qodana scan --fail-threshold 1
 
 workflows:
-  main:
+  pipeline:
     jobs:
       - build
-      - code-quality:
+      - qodana:
           requires:
             - build
